@@ -1,0 +1,59 @@
+{
+	"name": "@tuplo/shell",
+	"description": "Calling shell commands made easier",
+	"version": "0.0.0-development",
+	"repository": "git@github.com:tuplo/shell.git",
+	"author": "Rui Costa",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsx sh/build.ts",
+		"coverage": "tsx sh/coverage.ts",
+		"format": "prettier --write src sh",
+		"lint:ts": "tsc --noEmit",
+		"lint": "eslint src",
+		"test:ci": "vitest run",
+		"test": "vitest --watch"
+	},
+	"types": "dist/index.d.ts",
+	"module": "./dist/index.mjs",
+	"main": "./dist/index.cjs",
+	"exports": {
+		".": [
+			{
+				"import": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.mjs"
+				},
+				"require": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.cjs"
+				},
+				"default": "./dist/index.mjs"
+			},
+			"./dist/index.mjs"
+		]
+	},
+	"files": [
+		"dist/index.mjs",
+		"dist/index.cjs",
+		"dist/*.d.ts"
+	],
+	"devDependencies": {
+		"@types/node": "20.1.0",
+		"@typescript-eslint/eslint-plugin": "5.59.2",
+		"@typescript-eslint/parser": "5.59.2",
+		"@vitest/coverage-c8": "0.31.0",
+		"esbuild": "0.17.18",
+		"eslint": "8.40.0",
+		"eslint-config-airbnb-base": "15.0.0",
+		"eslint-config-airbnb-typescript": "17.0.0",
+		"eslint-config-prettier": "8.8.0",
+		"eslint-plugin-import": "2.27.5",
+		"nyc": "15.1.0",
+		"prettier": "2.8.8",
+		"tsx": "3.12.7",
+		"typescript": "5.0.4",
+		"vitest": "0.31.0",
+		"zx": "7.2.2"
+	}
+}
