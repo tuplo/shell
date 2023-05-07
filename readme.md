@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/npm/v/@tuplo/shell">
   <img src="https://img.shields.io/bundlephobia/minzip/@tuplo/shell">
   <a href="https://codeclimate.com/github/tuplo/shell/test_coverage">
-    <img src="https://api.codeclimate.com/v1/badges/7978f92305e2d8ed67c6/test_coverage" />
+    <img src="https://api.codeclimate.com/v1/badges/6a83d58d57c778206adb/test_coverage" />
   </a>
 </p>
 
