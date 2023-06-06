@@ -5,7 +5,7 @@
   <h1 align="center">shell</h3>
 
   <p align="center">
-    Thin wrapper around `child_process` making shell commands calls made easier.</i>
+    Thin wrapper around `child_process` for easier shell commands calls.</i>
   </p>
 <p>
   <img src="https://img.shields.io/npm/v/@tuplo/shell">
