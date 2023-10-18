@@ -1,8 +1,7 @@
 import { request, type RequestOptions } from "node:http";
-import { parse } from "node:url";
 
 export async function fetch(url: string, options: RequestOptions) {
-	const parsed = parse(url);
+	const parsed = new URL(url);
 	const opts: RequestOptions = {
 		method: "GET",
 		...parsed,

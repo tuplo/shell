@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { spawn } from "node:child_process";
-import type { Readable } from "node:stream";
+import { type Readable } from "node:stream";
 import util from "node:util";
 
 interface IExecArgs {

@@ -1,4 +1,4 @@
-import type { RequestOptions } from "node:http";
+import { type RequestOptions } from "node:http";
 import https from "node:https";
 
 import { fetch } from "./fetch";
