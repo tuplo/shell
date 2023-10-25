@@ -1,12 +1,22 @@
 import { request, type RequestOptions } from "node:http";
 
-export async function fetch(url: string, options: RequestOptions) {
-	const parsed = new URL(url);
-	const opts: RequestOptions = {
-		method: "GET",
-		...parsed,
-		...options,
+export function getRequestOptions(url: string, options: RequestOptions = {}) {
+	const uri = new URL(url);
+	const { host, hostname, pathname, port, protocol } = uri;
+
+	const parsedUrl: Partial<RequestOptions> = {
+		host,
+		hostname,
+		path: pathname,
+		port: port ? Number(port) : undefined,
+		protocol,
 	};
+
+	return { method: "GET", ...parsedUrl, ...options } as RequestOptions;
+}
+
+export async function fetch(url: string, options: RequestOptions) {
+	const opts = getRequestOptions(url, options);
 
 	return new Promise<void>((resolve, reject) => {
 		const req = request(opts, (res) => {
@@ -20,6 +30,6 @@ export async function fetch(url: string, options: RequestOptions) {
 
 		req.on("error", reject);
 
-		req.end();
+		req.destroy();
 	});
 }
