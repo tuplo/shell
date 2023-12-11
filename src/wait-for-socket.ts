@@ -1,13 +1,13 @@
 import { Socket } from "node:net";
 
-interface IWaitForSocketArgs {
+type IWaitForSocketArgs = {
 	host: string;
 	intervalInMs?: number;
 	password?: string;
 	port: number;
 	verbose?: boolean;
 	user?: string;
-}
+};
 
 async function connect(args: IWaitForSocketArgs): Promise<void> {
 	const { host, password, port, user } = args;

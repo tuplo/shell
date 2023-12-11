@@ -1,9 +1,9 @@
 import fs from "node:fs";
 
-interface IWaitFileSizeArgs {
+type IWaitFileSizeArgs = {
 	filePath: string;
 	fileSize: number;
-}
+};
 
 export async function waitForFileSize(args: IWaitFileSizeArgs) {
 	const { filePath, fileSize } = args;

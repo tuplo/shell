@@ -3,18 +3,18 @@ import { spawn } from "node:child_process";
 import { type Readable } from "node:stream";
 import util from "node:util";
 
-interface IExecArgs {
+type IExecArgs = {
 	input?: string | Buffer | Readable | undefined;
 	quiet?: boolean;
 	verbose?: boolean;
-}
+};
 
-interface IExecReturnValue {
+type IExecReturnValue = {
 	command: string;
 	stdout: string;
 	stderr: string;
 	exitCode: number | null;
-}
+};
 
 function exec(command: string, options?: IExecArgs): Promise<IExecReturnValue> {
 	const { input, quiet, verbose } = options || {};
@@ -81,18 +81,18 @@ function composeCommand(
 	return cmd;
 }
 
-interface IShellOptions {
+type IShellOptions = {
 	quiet?: boolean;
 	verbose?: boolean;
-}
+};
 
-interface IShell {
+type IShell = {
 	(
 		templatesOrOptions: TemplateStringsArray,
 		...expressions: ITemplateExpression[]
 	): Promise<IExecReturnValue>;
 	(options?: IShellOptions): IShell;
-}
+};
 
 function create$(options?: IShellOptions) {
 	function $(
