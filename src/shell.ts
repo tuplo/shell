@@ -1,19 +1,18 @@
-/* eslint-disable no-console */
 import { spawn } from "node:child_process";
-import { type Readable } from "node:stream";
-import util from "node:util";
+import type { Readable } from "node:stream";
+import { format } from "node:util";
 
 type IExecArgs = {
-	input?: string | Buffer | Readable | undefined;
+	input?: Buffer | Readable | string | undefined;
 	quiet?: boolean;
 	verbose?: boolean;
 };
 
 type IExecReturnValue = {
 	command: string;
-	stdout: string;
+	exitCode: null | number;
 	stderr: string;
-	exitCode: number | null;
+	stdout: string;
 };
 
 function exec(command: string, options?: IExecArgs): Promise<IExecReturnValue> {
@@ -25,7 +24,7 @@ function exec(command: string, options?: IExecArgs): Promise<IExecReturnValue> {
 		}
 
 		const [program, ...args] = command.split(" ");
-		const child = spawn(program, args, { stdio: "pipe", shell: true });
+		const child = spawn(program, args, { shell: true, stdio: "pipe" });
 
 		if (input) {
 			child.stdin?.write(input);
@@ -54,16 +53,16 @@ function exec(command: string, options?: IExecArgs): Promise<IExecReturnValue> {
 		});
 
 		child.on("close", (exitCode) => {
-			resolve({ command, stdout: stdout.trim(), stderr, exitCode });
+			resolve({ command, exitCode, stderr, stdout: stdout.trim() });
 		});
 	});
 }
 
 type ITemplateExpression =
-	| string
-	| undefined
+	| (boolean | number | string | undefined)[]
 	| boolean
-	| (string | undefined | boolean | number)[];
+	| string
+	| undefined;
 
 function composeCommand(
 	templates: TemplateStringsArray,
@@ -74,9 +73,10 @@ function composeCommand(
 		.map((s) => `${s}%s`)
 		.join("");
 
-	const cmd = util
-		.format(str, ...expressions.flat().filter(Boolean))
-		.replace(/%s$/, "");
+	const cmd = format(str, ...expressions.flat().filter(Boolean)).replace(
+		/%s$/,
+		""
+	);
 
 	return cmd;
 }
@@ -96,9 +96,9 @@ type IShell = {
 
 function create$(options?: IShellOptions) {
 	function $(
-		templatesOrOptions: TemplateStringsArray | IShellOptions,
+		templatesOrOptions: IShellOptions | TemplateStringsArray,
 		...expressions: ITemplateExpression[]
-	): Promise<IExecReturnValue> | IShell {
+	): IShell | Promise<IExecReturnValue> {
 		if (!Array.isArray(templatesOrOptions)) {
 			return create$({ ...options, ...templatesOrOptions }) as IShell;
 		}

@@ -5,17 +5,17 @@ type IWaitForSocketArgs = {
 	intervalInMs?: number;
 	password?: string;
 	port: number;
-	verbose?: boolean;
 	user?: string;
+	verbose?: boolean;
 };
 
 async function connect(args: IWaitForSocketArgs): Promise<void> {
 	const { host, password, port, user } = args;
 	const config = {
 		host,
+		password,
 		port,
 		username: user,
-		password,
 	};
 
 	return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export async function waitForSocket(args: IWaitForSocketArgs): Promise<void> {
 				}
 
 				resolve();
-			} catch (e) {
+			} catch {
 				if (verbose) {
 					process.stdout.write(".");
 				}

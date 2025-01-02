@@ -17,6 +17,7 @@ export async function waitForFileSize(args: IWaitFileSizeArgs) {
 			if (stat?.size === fileSize) {
 				process.stdout.write(" OK\n");
 				clearInterval(interval);
+				// eslint-disable-next-line unicorn/no-null
 				resolve(null);
 			}
 		}, 1_000);
